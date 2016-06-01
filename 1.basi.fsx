@@ -7,7 +7,7 @@ let not (x:bool) =
 
 
 // Function syntax
-let not = function
+let not2 = function
     | true -> false
     | false -> true
     ;;
