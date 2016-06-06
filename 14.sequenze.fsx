@@ -47,3 +47,36 @@ let rec fibfrom a b = seq {
 
 let fib n = Seq.item n (fibfrom 0UL 1UL)
 
+
+// ESERCIZI DI SEQUENZE 2
+// 1. Funzione sift
+let rec sift a sq = seq{
+    let e = Seq.item 0 sq
+    let sq1 = Seq.skip 1 sq
+    if not (e%a = 0) then
+      yield e
+    yield! (sift a sq1)
+    }
+;;
+
+let nat = Seq.initInfinite (fun x -> x);;
+let sq1 = sift 2 nat
+let sq2 = sift 3 nat
+
+// 2. Sieve
+let rec sieve sq = seq{
+    let x0 = Seq.item 0 sq
+    yield x0
+    yield! (sieve (sift x0 sq))
+    }
+    
+let primes = sieve (Seq.skip 2 nat);;
+
+// 3. Versione con meccanismo di caching
+let siftC a sq = Seq.cache (sift a sq)
+let sieveC sq = seq{
+    let x0 = Seq.item 0 sq
+    yield x0
+    yield! (sieve (siftC x0 sq))
+    }
+let primesC = Seq.cache(sieveC (Seq.skip 2 nat));;
