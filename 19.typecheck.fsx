@@ -78,3 +78,14 @@ let main (expr:exp) =
     | TypeError(expe,tpe) ->
         printf "Error typing %A with %A\n" expe tpe
 ;;
+
+
+let eval (expr:exp) =
+    match expr with
+        | K x -> K x
+        | Plus(K a, K b) -> K (a+b)
+        | Cons(h,t) -> Cons(eval(h),eval(t))
+        | Head(Cons(h,t)) -> eval(h)
+        | Tail(Cons(h,t)) -> eval(t)
+        | Nil -> Nil
+;;  

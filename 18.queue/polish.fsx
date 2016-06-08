@@ -51,7 +51,7 @@ let main (argv : String []) =
     let input = Console.ReadLine()
     let parsed = parse input
     let stack = evalRpn parsed
-
+    
     match top stack with
         | None -> printfn "Error!"
         | Some d -> printfn "Output %d" d
